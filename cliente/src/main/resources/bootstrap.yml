@@ -6,6 +6,4 @@ spring:
       uri: http://localhost:9091
       username: root
       password: 123
-      server:
-        git:
-          default-label: main
+

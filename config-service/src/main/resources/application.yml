@@ -1,5 +1,6 @@
 server:
-    port: 9091
+    port: 8092
+
 
 
 spring:
@@ -8,12 +9,10 @@ spring:
             server:
                 git:
                     uri: https://github.com/sebastian-medinaOch/microservicios-monolito.git
-                    search-paths:
-                    - config-data
+                    searchPaths: config-data
                     username: ${GIT_USER}
                     password: ${GIT_PASSWORD}
-
     security:
         user:
             name: root
-            password: 123 
+            password: 123

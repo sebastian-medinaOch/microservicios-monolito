@@ -18,5 +18,5 @@ public interface ClienteService {
     public ArrayList<Cliente> obtenerPorEdadMayor(Integer cliedad);
     public Boolean eliminarCliente(Long id);
     public ArrayList<Cliente> obtenerPorNumDoc(String clinumdoc);
-
+    
 }

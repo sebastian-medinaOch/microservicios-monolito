@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
-import javax.sound.midi.SysexMessage;
-
 import com.smo.cliente.application.validator.IValidatorCliente;
 import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.infrastructure.ClienteRepository;
@@ -30,7 +28,6 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente guarCliente(Cliente cliente) throws IOException {
         iValidatorCliente.validartorCliente(cliente);
-        System.out.println("Hola");
         return clienteRepository.save(cliente);
     }
 

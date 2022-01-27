@@ -1,9 +1,0 @@
-spring:
-  application:
-    name: cliente
-  cloud:
-    config:
-      uri: http://localhost:9091
-      username: root
-      password: 123
-

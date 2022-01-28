@@ -1,0 +1,24 @@
+#server.port = 7071
+
+#spring.datasource.url=jdbc:mysql://127.0.0.1:3306/monolito
+#spring.datasource.username=root
+#spring.datasource.password=root
+#spring.jpa.hibernate.ddl-auto=update
+
+
+# Mongo db
+#spring.data.mongodb.host=localhost
+#spring.data.mongodb.port=27017
+#spring.data.mongodb.database=monolito
+
+#spring.mvc.pathmatch.matching-strategy=ant-path-matcher
+
+spring:
+  application:
+    name: imagen-service
+
+  cloud:
+    config:
+      uri: http://localhost:9091
+      username: root
+      password: solo

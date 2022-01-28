@@ -31,6 +31,8 @@ public class ControllerAdviceImagen {
     public ResponseEntity<Object> errorMax(){
         return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE, "El archivo debe de ser una imagen de menor tamaño"));
     }
+
+
     @ExceptionHandler(NumberFormatException.class)
     @ResponseStatus(HttpStatus.NOT_ACCEPTABLE)
     public ResponseEntity<Object> errorNumber(){

@@ -8,7 +8,7 @@ import com.smo.cliente.application.validator.IValidatorCliente;
 import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.infrastructure.ClienteRepository;
 
-import com.smo.cliente.infrastructure.client.ImagenClient;
+import com.smo.cliente.client.ImagenClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -23,7 +23,4 @@ public class Cliente {
     private Integer cliEda;
     private String cliCiu;
 
-    @Transient
-    private ImagenModel imagenModel;
-
 }

@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class ImagenServiceImp implements  ImagenService{
+public class ImagenServiceImp implements ImagenService {
 
     @Autowired
     private ImagenRepository imagenRepository;
@@ -49,9 +49,10 @@ public class ImagenServiceImp implements  ImagenService{
 
                 List<ImagenModel> list = imagenRepository.findByCliImgNum(cliimgNum);
                 List<String> listDelete = new ArrayList<>();
-                for(ImagenModel cl:list){
+                for (ImagenModel cl : list) {
                     listDelete.add(cl.getCloIdImg());
-                };
+                }
+                ;
                 imagenRepository.deleteClienteImagenModelByCliImgNum(cliimgNum);
                 return true;
             } else {

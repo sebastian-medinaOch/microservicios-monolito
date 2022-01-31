@@ -4,6 +4,7 @@ import com.smo.imagen.application.ImagenService;
 import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
 import com.smo.imagen.infrastructure.ImagenRepository;
+import com.smo.imagen.infrastructure.client.ClienteClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,17 +26,20 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
 
+    @Autowired
+    private ClienteClient clienteClient;
+
     @PostMapping("/crear")
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException {
         //CAMBIAR EL IMAGENREPOSITORY CON CLIENTEREPOSITORY
-        //if (imagenRepository.findByCliImgNum(cliImgNum.trim()).size() > 0) {
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED,
-                Optional.of(imagenService.guardarClienteImagen(cliImgNum, multipartFile))));
-        //}else {
-        //    return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND,  "No se
-        //    encontró a un cliente por este numero de documento " + cliImgNum
-        //            + " , para poder crear imagenes, por favor crear un cliente"));
-        //}
+        if (clienteClient.obtenerPorNumDoc(cliImgNum.trim()).getStatusCode().value() == 302) {
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED,
+                    Optional.of(imagenService.guardarClienteImagen(cliImgNum, multipartFile))));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se " +
+                    "encontró a un cliente por este numero de documento " + cliImgNum
+                    + " , para poder crear imagenes, por favor crear un cliente"));
+        }
     }
 
     @GetMapping("/obtenertodos")
@@ -73,11 +77,13 @@ public class ImagenController {
     }
 
     @DeleteMapping("/eliminarimg/imagen/{cloIdImg}")
-    public ResponseEntity<Object> eliminarImgUnica(@PathVariable("cloIdImg") String cloIdImg)  throws IOException{
-        if (imagenService.eliminarCliImgUnica(cloIdImg).toString().equals(0)){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se encontró ninguna imagen con el id: " + cloIdImg));
+    public ResponseEntity<Object> eliminarImgUnica(@PathVariable("cloIdImg") String cloIdImg) throws IOException {
+        if (imagenService.eliminarCliImgUnica(cloIdImg).toString().equals(0)) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se " +
+                    "encontró ninguna imagen con el id: " + cloIdImg));
         } else {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED, Optional.of("Se eliminó correctamente la imagen con el id: " + cloIdImg)));
+            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED, Optional.of(
+                    "Se eliminó correctamente la imagen con el id: " + cloIdImg)));
         }
     }
 }

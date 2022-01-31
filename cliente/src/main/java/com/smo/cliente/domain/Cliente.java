@@ -1,12 +1,8 @@
 package com.smo.cliente.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.smo.cliente.domain.imagen.ImagenModel;
 import lombok.Data;
 
 @Entity
@@ -26,5 +22,8 @@ public class Cliente {
     private String cliNumDoc;
     private Integer cliEda;
     private String cliCiu;
+
+    @Transient
+    private ImagenModel imagenModel;
 
 }

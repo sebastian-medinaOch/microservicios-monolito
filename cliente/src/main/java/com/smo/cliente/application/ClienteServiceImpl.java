@@ -8,7 +8,7 @@ import com.smo.cliente.application.validator.IValidatorCliente;
 import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.infrastructure.ClienteRepository;
 
-import com.smo.cliente.client.ImagenClient;
+import com.smo.cliente.infrastructure.client.ImagenClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -54,6 +54,7 @@ public class ClienteServiceImpl implements ClienteService {
     public Boolean eliminarCliente(Long id) {
         try {
             Optional<Cliente> cliente = obtenerPorId(id);
+            System.out.println(cliente.get().getCliNumDoc());
             imagenClient.eliminarCliImg(cliente.get().getCliNumDoc());
             clienteRepository.deleteById(id);
             return true;

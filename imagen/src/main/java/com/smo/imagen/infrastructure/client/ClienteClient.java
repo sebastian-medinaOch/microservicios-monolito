@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @FeignClient(name = "cliente-service")
 public interface ClienteClient {
 
-    @GetMapping("clientes/query/clinumdoc")
-    public ResponseEntity<Object> obtenerPorNumDoc(@RequestParam("clinumdoc") String clinumdoc);
+    @GetMapping(path = "clientes/querydos")
+    public ResponseEntity<Object> obtenerPorNumDoc(@RequestParam("cliImgNum") String cliImgNum);
 
 }

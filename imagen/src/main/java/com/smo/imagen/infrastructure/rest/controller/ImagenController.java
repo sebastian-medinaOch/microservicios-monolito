@@ -3,6 +3,7 @@ package com.smo.imagen.infrastructure.rest.controller;
 import com.smo.imagen.application.ImagenService;
 import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
+import com.smo.imagen.domain.cliente.ClienteModel;
 import com.smo.imagen.infrastructure.ImagenRepository;
 import com.smo.imagen.infrastructure.client.ClienteClient;
 import lombok.RequiredArgsConstructor;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -30,9 +32,8 @@ public class ImagenController {
     private ClienteClient clienteClient;
 
     @PostMapping("/crear")
-    public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException {
-        //CAMBIAR EL IMAGENREPOSITORY CON CLIENTEREPOSITORY
-        if (clienteClient.obtenerPorNumDoc(cliImgNum.trim()).getStatusCode().value() == 302) {
+    public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException  {
+        if (true) {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED,
                     Optional.of(imagenService.guardarClienteImagen(cliImgNum, multipartFile))));
         } else {

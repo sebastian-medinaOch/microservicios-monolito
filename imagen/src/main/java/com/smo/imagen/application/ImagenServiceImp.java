@@ -3,7 +3,9 @@ package com.smo.imagen.application;
 import com.smo.imagen.application.validator.IValidatorImagen;
 import com.smo.imagen.domain.ImagenModel;
 import com.smo.imagen.infrastructure.ImagenRepository;
+import com.smo.imagen.infrastructure.client.ClienteClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,8 @@ public class ImagenServiceImp implements ImagenService {
     private IValidatorImagen iValidatorImagen;
 
 
+
+
     @Override
     public List<ImagenModel> obtenerTodosCliImg() {
         return imagenRepository.findAll();
@@ -29,6 +33,8 @@ public class ImagenServiceImp implements ImagenService {
     @Override
     public ImagenModel guardarClienteImagen(String cliImgNum, MultipartFile multipartFile) throws IOException {
         iValidatorImagen.validatorImagen(multipartFile);
+
+
 
         ImagenModel imagenModel = new ImagenModel();
         imagenModel.setCliImgNum(cliImgNum.trim());

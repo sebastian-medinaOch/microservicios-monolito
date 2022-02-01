@@ -1,8 +1,6 @@
 package com.smo.cliente.domain;
 
 import javax.persistence.*;
-
-import com.smo.cliente.domain.imagen.ImagenModel;
 import lombok.Data;
 
 @Entity

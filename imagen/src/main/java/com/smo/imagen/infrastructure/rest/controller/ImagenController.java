@@ -3,9 +3,7 @@ package com.smo.imagen.infrastructure.rest.controller;
 import com.smo.imagen.application.ImagenService;
 import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
-import com.smo.imagen.domain.cliente.ClienteModel;
 import com.smo.imagen.infrastructure.ImagenRepository;
-import com.smo.imagen.infrastructure.client.ClienteClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,8 +26,6 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
 
-    @Autowired
-    private ClienteClient clienteClient;
 
     @PostMapping("/crear")
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException  {

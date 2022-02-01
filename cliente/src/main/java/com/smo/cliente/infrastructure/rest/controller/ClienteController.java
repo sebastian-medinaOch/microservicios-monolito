@@ -3,7 +3,6 @@ package com.smo.cliente.infrastructure.rest.controller;
 import java.io.IOException;
 import java.util.Optional;
 
-import com.smo.cliente.application.ClienteCompletoService;
 import com.smo.cliente.application.ClienteService;
 import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.domain.Answers.AnswerData;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
 
 
 @RestController
@@ -30,8 +28,6 @@ public class ClienteController {
     @Autowired
     private ClienteService clienteService;
 
-    @Autowired
-    private ClienteCompletoService clienteCompletoService;
 
     @GetMapping()
     public ResponseEntity<Object> obtenerClientes() {
@@ -112,12 +108,5 @@ public class ClienteController {
         }
     }
 
-    @PostMapping("/clientecompleto")
-    public ResponseEntity<Object> crearClienteCompleto(String clienteModel, MultipartFile multipartFile)
-            throws IOException {
-        return ResponseEntity.status(HttpStatus.ACCEPTED)
-                .body(new AnswerData(HttpStatus.ACCEPTED,
-                        Optional.of(this.clienteCompletoService.guardarClienteCompleto(clienteModel, multipartFile))));
-    }
 
 }

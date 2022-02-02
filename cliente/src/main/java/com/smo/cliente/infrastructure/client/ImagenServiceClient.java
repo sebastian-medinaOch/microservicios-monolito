@@ -15,12 +15,14 @@ import java.io.IOException;
 public interface ImagenServiceClient {
 
 
+    //@PostMapping("imagenes")
+    //public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException ;
+
     @GetMapping("imagenes/obtenertodos")
     public ResponseEntity<Object> obtenerTodosImg();
 
     @DeleteMapping(path = "imagenes/eliminarimg/{cliimgnum}")
     public ResponseEntity<Object> eliminarImg(@PathVariable("cliimgnum") String cliimgnum) throws IOException;
-
 
 
 }

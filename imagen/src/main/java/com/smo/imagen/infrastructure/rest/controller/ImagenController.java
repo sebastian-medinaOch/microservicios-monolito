@@ -4,6 +4,7 @@ import com.smo.imagen.application.ImagenService;
 import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
 import com.smo.imagen.infrastructure.ImagenRepository;
+import com.smo.imagen.infrastructure.client.ClientServiceClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,14 +26,16 @@ public class ImagenController {
     @Autowired
     private ImagenService imagenService;
 
+    @Autowired
+    ClientServiceClient clientServiceClient;
 
     @PostMapping("/crear")
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException  {
-        if (true) {
-            return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED,
+        if (clientServiceClient.obtenerPorNumDoc(cliImgNum).getBody().toString().split(",")[1].trim().equals("status=FOUND")) {
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerData(HttpStatus.ACCEPTED,
                     Optional.of(imagenService.guardarClienteImagen(cliImgNum, multipartFile))));
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se " +
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se " +
                     "encontró a un cliente por este numero de documento " + cliImgNum
                     + " , para poder crear imagenes, por favor crear un cliente"));
         }
@@ -67,7 +70,7 @@ public class ImagenController {
             return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED, Optional.of(
                     "Al cliente con el numero de documento " + cliimgnum + " se le eliminaron todas las imagenes.")));
         } else {
-            return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE,
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE,
                     "Al cliente con el numero de documento " + cliimgnum + " no se le eliminaron imagenes."));
         }
     }

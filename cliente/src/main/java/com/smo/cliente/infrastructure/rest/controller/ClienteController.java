@@ -111,10 +111,10 @@ public class ClienteController {
     @GetMapping("/querydos")
     public ResponseEntity<Object> obtenerPorNumDoc(@RequestParam("cliImgNum") String clinumdoc) {
         if (clienteService.obtenerPorNumDoc(clinumdoc).isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "El " +
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_FOUND, "El " +
                     "cliente no se encontró"));
         } else {
-            return ResponseEntity.status(HttpStatus.FOUND).body(new AnswerData(HttpStatus.FOUND,
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerData(HttpStatus.FOUND,
                     Optional.of(clienteService.obtenerPorNumDoc(clinumdoc))));
         }
     }

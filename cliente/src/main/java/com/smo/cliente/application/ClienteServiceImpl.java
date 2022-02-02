@@ -8,6 +8,7 @@ import com.smo.cliente.application.validator.IValidatorCliente;
 import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.infrastructure.ClienteRepository;
 
+import com.smo.cliente.infrastructure.client.ImagenServiceClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +20,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Autowired
     IValidatorCliente iValidatorCliente;
+
+    @Autowired
+    ImagenServiceClient imagenServiceClient;
 
 
     @Override
@@ -39,7 +43,7 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ArrayList<Cliente> obtenerPorNumDocTip(String clinumdoc, String clitipdoc) {
-        return clienteRepository.findByCliNumDocAndCliTipDoc(clinumdoc,clitipdoc);
+        return clienteRepository.findByCliNumDocAndCliTipDoc(clinumdoc, clitipdoc);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class ClienteServiceImpl implements ClienteService {
     public Boolean eliminarCliente(Long id) {
         try {
             Optional<Cliente> cliente = obtenerPorId(id);
-            //imagenClient.eliminarCliImg(cliente.get().getCliNumDoc());
+            imagenServiceClient.eliminarImg(cliente.get().getCliNumDoc());
             clienteRepository.deleteById(id);
             return true;
         } catch (Exception e) {

@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface ClienteService {
     
-    public ArrayList<Cliente> obtenerClientes();
+    public ArrayList<Cliente> obtenerClientes() ;
     public Cliente guarCliente(Cliente cliente) throws IOException;
     public Optional<Cliente> obtenerPorId(Long id);
     public ArrayList<Cliente> obtenerPorNumDocTip(String clinumdoc, String clitipdoc);

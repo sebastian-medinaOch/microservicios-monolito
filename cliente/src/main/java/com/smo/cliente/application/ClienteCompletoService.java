@@ -9,6 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
+
 @Service
 public class ClienteCompletoService {
 
@@ -20,10 +21,12 @@ public class ClienteCompletoService {
     @Autowired
     ClienteService clienteService;
 
+
     public Cliente guardarClienteCompleto(String clientemodel, MultipartFile multipartFile) throws IOException {
         Cliente cliente = gson.fromJson(clientemodel, Cliente.class);
 
         iValidatorCliente.validartorCliente(cliente);
+
         return clienteService.guarCliente(cliente);
 
     }

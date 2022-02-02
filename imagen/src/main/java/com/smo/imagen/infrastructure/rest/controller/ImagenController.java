@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Optional;
 
 @RestController
@@ -45,7 +44,7 @@ public class ImagenController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new AnswerNotData(HttpStatus.NOT_FOUND, "No se " +
                     "encontraron clientes"));
         } else {
-            return ResponseEntity.status(HttpStatus.FOUND).body(new AnswerData(HttpStatus.FOUND,
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerData(HttpStatus.OK,
                     Optional.of(imagenService.obtenerTodosCliImg())));
         }
     }

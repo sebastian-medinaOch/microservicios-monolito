@@ -9,7 +9,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 
-@FeignClient(name = "imagen-service")
+@FeignClient(name = "imagen-service", fallback = ImagenHystrixFallbackFactory.class)
 public interface ImagenServiceClient {
 
 

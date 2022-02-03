@@ -34,7 +34,7 @@ public class ClienteCompletoService {
         iValidatorCliente.validartorCliente(cliente);
 
         clienteService.guarCliente(cliente);
-        try {
+        //try {
             String imagen = imagenServiceClient.guardarClienteImagenMongo(cliente.getCliNumDoc().trim(),
                             multipartFile).getBody()
                     .toString().split("data=")[1].replace("{", "").replace("}", "");
@@ -43,9 +43,9 @@ public class ClienteCompletoService {
             imagenModel.setCliImgUrl(imagen.split(",")[1].trim());
             imagenModel.setCloIdImg(imagen.split(",")[2].trim());
             return imagenModel;
-        } catch (Exception e) {
+        //} catch (Exception e) {
             //String hp = e.getMessage().toString().split("]:")[1].replace("[","").replace("]","").trim().split(",")[1];
-            return new ImagenModel();
-        }
+            //return new ImagenModel();
+        //}
     }
 }

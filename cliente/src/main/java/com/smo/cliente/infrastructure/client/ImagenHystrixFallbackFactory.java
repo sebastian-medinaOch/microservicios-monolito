@@ -18,11 +18,13 @@ public class ImagenHystrixFallbackFactory implements ImagenServiceClient{
 
     @Override
     public ResponseEntity<Object> obtenerTodosImg() {
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Ocurrio algún error con el microservico de " +
+                "cliente");
     }
 
     @Override
     public ResponseEntity<Object> eliminarImg(String cliimgnum) throws IOException {
-        return null;
+        return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Ocurrio algún error con el microservico de " +
+                "cliente");
     }
 }

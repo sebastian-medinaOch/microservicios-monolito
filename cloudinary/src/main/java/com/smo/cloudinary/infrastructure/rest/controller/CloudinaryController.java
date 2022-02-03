@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -42,4 +43,12 @@ public class CloudinaryController {
         }
     }
 
+    @DeleteMapping("/deletelist")
+    public ResponseEntity<Object> deleteImagenList(@RequestBody List<String> listss) throws Exception{
+        if (cloudinary.deleteList(listss)){
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerData(HttpStatus.ACCEPTED, Optional.of("Imagen eliminada")));
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE, "Imagen no eliminada"));
+        }
+    }
 }

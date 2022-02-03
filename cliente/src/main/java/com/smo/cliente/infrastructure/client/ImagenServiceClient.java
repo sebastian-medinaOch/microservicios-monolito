@@ -1,11 +1,9 @@
 package com.smo.cliente.infrastructure.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -15,8 +13,10 @@ import java.io.IOException;
 public interface ImagenServiceClient {
 
 
-    //@PostMapping("imagenes")
-    //public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException ;
+    @PostMapping(value = "imagenes/crear", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Object> guardarClienteImagenMongo(@RequestParam("cliImgNum") String cliImgNum ,
+                                                            @RequestPart("multipartFile") MultipartFile multipartFile) throws
+            IOException;
 
     @GetMapping("imagenes/obtenertodos")
     public ResponseEntity<Object> obtenerTodosImg();

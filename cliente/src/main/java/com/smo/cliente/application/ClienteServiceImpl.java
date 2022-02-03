@@ -55,8 +55,8 @@ public class ClienteServiceImpl implements ClienteService {
     public Boolean eliminarCliente(Long id) {
         try {
             Optional<Cliente> cliente = obtenerPorId(id);
-            clienteRepository.deleteById(id);
             imagenServiceClient.eliminarImg(cliente.get().getCliNumDoc());
+            clienteRepository.deleteById(id);
             return true;
         } catch (Exception e) {
             return false;

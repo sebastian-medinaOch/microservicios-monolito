@@ -5,6 +5,7 @@ import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
 import com.smo.imagen.infrastructure.ImagenRepository;
 import com.smo.imagen.infrastructure.client.ClientServiceClient;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,6 +31,7 @@ public class ImagenController {
     @Autowired
     ClientServiceClient clientServiceClient;
 
+    @CircuitBreaker(name = "")
     @PostMapping("/crear")
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException {
         if (clientServiceClient.obtenerPorNumDoc(cliImgNum).getBody().toString().split(",")[1].trim().equals("status" + "=FOUND")) {

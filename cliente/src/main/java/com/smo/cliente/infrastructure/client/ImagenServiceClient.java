@@ -1,5 +1,6 @@
 package com.smo.cliente.infrastructure.client;
 
+import com.smo.cliente.domain.Answers.AnswerNotData;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.HttpStatus;
@@ -14,11 +15,9 @@ import java.io.IOException;
 @FeignClient(name = "imagen-service")
 public interface ImagenServiceClient {
 
-    @CircuitBreaker(name = "imagenCB", fallbackMethod = "guardarClienteImagenMongoFallBack")
     @PostMapping(value = "imagenes/crear", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> guardarClienteImagenMongo(@RequestParam("cliImgNum") String cliImgNum,
-                                                            @RequestPart("multipartFile") MultipartFile multipartFile) throws
-            IOException;
+                                                            @RequestPart("multipartFile") MultipartFile multipartFile) throws IOException;
 
     @GetMapping("imagenes/obtenertodos")
     public ResponseEntity<Object> obtenerTodosImg();
@@ -27,11 +26,5 @@ public interface ImagenServiceClient {
     public ResponseEntity<Object> eliminarImg(@PathVariable("cliimgnum") String cliimgnum) throws IOException;
 
 
-    private ResponseEntity<Object> guardarClienteImagenMongoFallBack(@RequestParam("cliImgNum") String cliImgNum,
-                                                                    @RequestPart("multipartFile") MultipartFile multipartFile, RuntimeException e) throws
-            IOException {
-        return ResponseEntity.status(HttpStatus.OK).body("Ocurrio un error con imagen serviece");
-    }
 
-    ;
 }

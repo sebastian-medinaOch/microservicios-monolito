@@ -9,18 +9,14 @@ import com.smo.cliente.domain.Cliente;
 import com.smo.cliente.domain.Answers.AnswerData;
 import com.smo.cliente.domain.Answers.AnswerNotData;
 
+import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.openfeign.loadbalancer.FeignBlockingLoadBalancerClient;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
@@ -37,6 +33,7 @@ public class ClienteController {
     @Autowired
     private ClienteCompletoService clienteCompletoService;
 
+
     @GetMapping()
     public ResponseEntity<Object> obtenerClientes() {
         if (clienteService.obtenerClientes().isEmpty()) {
@@ -48,6 +45,7 @@ public class ClienteController {
         }
     }
 
+    @CircuitBreaker(name = "imagenCB", fallbackMethod = "crearClienteCompletoFallBack")
     @PostMapping(value = "/clientecompleto", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Object> crearClienteCompleto(String clienteModel, MultipartFile multipartFile) throws IOException {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerData(HttpStatus.ACCEPTED,
@@ -87,6 +85,7 @@ public class ClienteController {
         }
     }
 
+    @CircuitBreaker(name = "imagenCB", fallbackMethod = "eliminarPorIdFallBack")
     @DeleteMapping(path = "{id}")
     public ResponseEntity<Object> eliminarPorId(@PathVariable("id") Long id) {
         if (clienteService.obtenerPorId(id).isEmpty()) {
@@ -122,5 +121,16 @@ public class ClienteController {
         }
     }
 
+    private ResponseEntity<Object> crearClienteCompletoFallBack(String clienteModel, MultipartFile multipartFile,
+                                                                FeignException e) throws IOException {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE,
+                e.getMessage()));
+    }
+
+    private ResponseEntity<Object> eliminarPorIdFallBack(@PathVariable("id") Long id,
+                                                         RuntimeException e) {
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(new AnswerNotData(HttpStatus.NOT_ACCEPTABLE,
+                e.getMessage()));
+    }
 
 }

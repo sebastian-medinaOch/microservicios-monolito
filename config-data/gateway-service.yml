@@ -1,0 +1,27 @@
+server:
+  port: 0102
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8099/eureka/
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: cliente-service
+          uri: lb://cliente-service
+          predicates:
+            - Path=/clientes/**
+        - id: imagen-service
+          uri: lb://imagen-service
+          predicates:
+            - Path=/imagenes/**
+        - id: cloudinary-service
+          uri: lb://cloudinary-service
+          predicates:
+            - Path=/cloudinary/**

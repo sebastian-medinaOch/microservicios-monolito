@@ -5,6 +5,7 @@ import com.smo.imagen.domain.answers.AnswerData;
 import com.smo.imagen.domain.answers.AnswerNotData;
 import com.smo.imagen.infrastructure.ImagenRepository;
 import com.smo.imagen.infrastructure.client.ClientServiceClient;
+import feign.FeignException;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class ImagenController {
     @Autowired
     ClientServiceClient clientServiceClient;
 
-    @CircuitBreaker(name = "")
+    @CircuitBreaker(name = "clienteCB", fallbackMethod = "guardarClienteImagenMongoFallback")
     @PostMapping("/crear")
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException {
         if (clientServiceClient.obtenerPorNumDoc(cliImgNum).getBody().toString().split(",")[1].trim().equals("status" + "=FOUND")) {
@@ -67,6 +68,7 @@ public class ImagenController {
         }
     }
 
+    @CircuitBreaker(name = "cloudinaryCB", fallbackMethod = "eliminarImgFallback")
     @DeleteMapping(path = "/eliminarimg/{cliimgnum}")
     public ResponseEntity<Object> eliminarImg(@PathVariable("cliimgnum") String cliimgnum) throws IOException {
         if (imagenService.eliminarCliImg(cliimgnum)) {
@@ -78,6 +80,7 @@ public class ImagenController {
         }
     }
 
+    @CircuitBreaker(name = "cloudinaryCB", fallbackMethod = "eliminarCliImgUnicaFallback")
     @DeleteMapping("/eliminarimg/imagen/{cloIdImg}")
     public ResponseEntity<Object> eliminarImgUnica(@PathVariable("cloIdImg") String cloIdImg) throws IOException {
         if (imagenService.eliminarCliImgUnica(cloIdImg).toString().equals("0")) {
@@ -88,4 +91,22 @@ public class ImagenController {
                     "Se eliminó correctamente la imagen con el id: " + cloIdImg)));
         }
     }
+
+    public ResponseEntity<Object> guardarClienteImagenMongoFallback(String cliImgNum, MultipartFile multipartFile,
+                                                                    FeignException e) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_FOUND,
+                e.getMessage()));
+    }
+
+    public ResponseEntity<Object> eliminarImgFallback(@PathVariable("cliimgnum") String cliimgnum, FeignException e) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_FOUND,
+                e.getMessage()));
+    }
+
+    public ResponseEntity<Object> eliminarCliImgUnicaFallback(@PathVariable("cloIdImg") String cloIdImg,
+                                                              FeignException e) throws IOException {
+        return ResponseEntity.status(HttpStatus.OK).body(new AnswerNotData(HttpStatus.NOT_FOUND,
+                e.getMessage()));
+    }
+
 }

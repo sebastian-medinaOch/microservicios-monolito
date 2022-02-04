@@ -1,6 +1,10 @@
 package com.smo.imagen.infrastructure.client;
 
+import com.smo.imagen.domain.answers.AnswerNotData;
+import feign.FeignException;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -22,4 +26,5 @@ public interface CloudinaryServiceClient {
 
     @DeleteMapping(value = "cloudinary/delete/{id}")
     public ResponseEntity<Object> deleteImagen(@PathVariable String id) throws IOException;
+
 }

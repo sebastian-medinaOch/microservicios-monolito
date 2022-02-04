@@ -1,5 +1,5 @@
 server:
-  port: 0102
+  port: 2020
 
 eureka:
   client:

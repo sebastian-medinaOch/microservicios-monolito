@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 
 @Component
-public class ImagenHystrixFallbackFactory implements ImagenServiceClient{
+public class ImagenRFallbackFactory implements ImagenServiceClient{
     @Override
     public ResponseEntity<Object> guardarClienteImagenMongo(String cliImgNum, MultipartFile multipartFile) throws IOException {
         //Probar de devolver lo mismo que tiene la función
